@@ -16,7 +16,13 @@ class Category:
     description: str
     products: str
 
+    total_category = 0
+    total_product = 0
+
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
         self.products = products
+
+        Category.total_category += 1
+        Category.total_product += len(products)
