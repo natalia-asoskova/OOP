@@ -1,54 +1,39 @@
-# import pytest
-#
-# from src.product import Product, Category
-#
-#
-# @pytest.fixture
-# def one_product():
-#     return Product(
-#         name="платье",
-#         description="красный цвет, хлопок",
-#         price=3000,
-#         quantity=5
-#     )
-#
-# @pytest.fixture
-# def one_category(one_product):
-#     return Category(
-#         name="Одежда",
-#         description="Летняя",
-#         products=[one_product]
-#     )
-# @pytest.fixture
-# def category(self):
-#     Category.total_categories = 0
-#     Category.total_products = 0
-
-
 import pytest
 from src.product import Product, Category
 
+@pytest.fixture
+def first_product():
+    return {
+        'name': 'Платье',
+        'description': 'Летнее',
+        'price': 3000,
+        'quantity': 10
+    }
 
 @pytest.fixture
-def one_product():
-    return Product(
-        name="платье",
-        description="красный цвет, хлопок",
-        price=3000,
-        quantity=5
-    )
-
+def second_product():
+    return {
+        'name': 'Джинсы',
+        'description': 'Темно синие',
+        'price': 800,
+        'quantity': 15
+    }
 
 @pytest.fixture
-def one_category(one_product):
-    return Category(
-        name="Одежда",
-        description="Летняя",
-        products=[one_product]
-    )
+def sample_product(first_product):
+    return Product.new_product(first_product)
 
+@pytest.fixture
+def another_product(second_product):
+    return Product.new_product(second_product)
 
-@pytest.fixture(autouse=True)
-def reset_counters():
-    Category.total_categories = 0
-    Category.total_products = 0
+@pytest.fixture
+def empty_category():
+    return Category("Одежда", "Для женщин")
+
+@pytest.fixture
+def category_with_products(sample_product, another_product):
+    cat = Category("Одежда", "Для женщин")
+    cat.add_product(sample_product)
+    cat.add_product(another_product)
+    return cat

@@ -1,7 +1,11 @@
-from tests.conftests import one_product
+import pytest
+from tests.conftests import *
+def test_new_product_creates_product(first_product):
+    product = Product.new_product(first_product)
+    assert isinstance(product, Product)
+    assert product.name == 'Платье'
+    assert product.description == 'Летнее'
+    assert product.price == 3000
+    assert product.quantity == 10
 
-def test_product_init(one_product):
-    assert one_product.name == "платье"
-    assert one_product.description == "красный цвет, хлопок"
-    assert one_product.price == 3000
-    assert one_product.quantity == 5
+
